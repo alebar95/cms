@@ -1,27 +1,15 @@
 # Cms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
+Questo progetto è stato generato con la versione 14.2.8 di Angluar CLI.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Eseguire `ng serve` per servire l'applicazione in locale. Aprire il browser all'indirizzo `http://localhost:4200/`.
 
-## Code scaffolding
+## Mock api
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Le api BE sono state "mockate" attraverso JSONServer: `https://github.com/‹typicode/json-server`. Il database è nel file `src/app/api/db.json`.
 
-## Build
+Prima di servire il FE con `ng serve` aprire un terminale al percorso del file db.json e lanciare il comando `json-server --watch db.json`. Questo comando farà partire il server JSON fake in locale sulla porta 3000: `http://localhost:3000/`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
