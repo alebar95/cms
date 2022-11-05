@@ -1,6 +1,0 @@
-{
-  "articles": [
-    { "id": 1, "title": "Lorem Ipsum", "author": {"id": 1, "name": "Alessandro"} }
-  ],
-  "authors": { "id": 1, "name": "Alessandro" }
-}

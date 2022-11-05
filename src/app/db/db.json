@@ -1,0 +1,35 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "title": "Lorem Ipsum",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "category": "Breaking News",
+      "image": "",
+      "creation_date": "1667652265159",
+      "author": {
+        "id": 1,
+        "name": "Alessandro",
+        "surname": "Barruffo"
+      }
+    },
+    {
+      "title": "Briatore lancia il gel per le mani da usare dopo aver toccato un povero",
+      "content": "Riccosfonda (TO)  Continuano a far discutere le dichiarazioni di Flavio Briatore sui poveri. Dopo aver affermato che sono i ricchi a investire e che “i poveri non creano posti di lavoro”, l’imprenditore piemontese ha rincarato la dose: 'La povertà può essere contagiosa. Uno straccione può trasmetterla a un milionario, i ricchi vanno protetti e tutelati.'Briatore ha citato una teoria riferitagli dal suo amico Alberto Zangrillo, secondo cui la povertà ha molte analogie col COVID-19. Anche in questo caso ci può essere uno spillover da una specie inferiore a una superiore. Per il COVID si ipotizza un passaggio dal pipistrello all’uomo, per il POVERID un passaggio dal povero al ricco.Come per il Coronavirus, si può pensare a qualche misura che riduca il rischio di trasmissione. Briatore da buon imprenditore ha trasformato un problema in un’opportunità. Contro il contagio da COVID c’è stato il boom dei gel a base di alcol per le mani, per proteggere i ricchi che per sbaglio toccano un povero il patron del Twiga lancerà invece un gel specifico con un disinfettante in grado di uccidere fino al 99% dei germi della povertà.Il nuovo prodotto si chiamerà BillionGel e sarà confezionato da Billionaire Bears Nft, la società avente come amministratore delegato Nathan Falco, il 12enne figlio di Flavio. Un flacone da 100ml costerà 140 euro, ma sarà possibile acquistare a soli 200 euro un pacchetto che comprende una confezione di gel e una pizza Pata Negra nel nuovo locale di Briatore.",
+      "author": {
+        "id": 1,
+        "name": "Alessandro",
+        "surname": "Barruffo"
+      },
+      "category": "Customs and Society",
+      "image": "",
+      "creation_date": "1667652265159",
+      "id": 2
+    }
+  ],
+  "authors": {
+    "id": 1,
+    "name": "Alessandro"
+  }
+}
+

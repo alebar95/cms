@@ -1,0 +1,31 @@
+.main-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.logo {
+  background-color: #00377d;
+  img {
+    width: 50px;
+  }
+}
+
+.sidenav {
+  background-color: #041c59;
+  float: left;
+  color: #4e6999;
+  .item {
+    cursor: pointer;
+    &.active {
+      background-color: #00377d;
+      border-radius: 10px;
+      color: white;
+    }
+
+  }
+}
+.main {
+
+  width: 100%;
+}
+

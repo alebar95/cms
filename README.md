@@ -8,7 +8,7 @@ Eseguire `ng serve` per servire l'applicazione in locale. Aprire il browser all'
 
 ## Mock api
 
-Le api BE sono state "mockate" attraverso JSONServer: `https://github.com/‹typicode/json-server`. Il database è nel file `src/app/api/db.json`.
+Le api BE sono state "mockate" attraverso JSONServer: `https://github.com/‹typicode/json-server`. Il database è nel file `src/app/db/db.json`.
 
 Prima di servire il FE con `ng serve` aprire un terminale al percorso del file db.json e lanciare il comando `json-server --watch db.json`. Questo comando farà partire il server JSON fake in locale sulla porta 3000: `http://localhost:3000/`.
 
