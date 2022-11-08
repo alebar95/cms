@@ -25,7 +25,48 @@
   }
 }
 .main {
-
   width: 100%;
 }
+
+.title {
+  color: white;
+  font-weight: bold;
+}
+
+.toolbar {
+  height: 66px;
+  width: 100%;
+  background: white;
+  box-shadow: inset 0px 0px 3px 0px #868b93;
+}
+
+.page {
+  background-color: #f5fafd;
+  height: calc( 100% - 66px);
+}
+
+.user-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: solid 1px #868b93;
+}
+
+.notification-icon {
+  color: #868b93;
+}
+
+.search-input-wrapper {
+  border-radius: 5px;
+  color: #868b93;
+  background-color: #f5fafd;
+  .search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    text-overflow: ellipsis;
+  }
+}
+
+
 

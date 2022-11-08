@@ -1,20 +1,36 @@
 <div class="main-container d-flex">
-  <div class="sidenav ">
-    <div class="logo ps-3 py-2 d-flex align-items-center" >
+  <div class="sidenav">
+    <div class="logo py-2 d-flex align-items-center justify-content-center" >
         <img src="../assets/cms.png" alt="logo">
-        <span class="ms-3" >CMS</span>
+       <!-- <span class="ms-3 title" >Inc.</span>-->
     </div>
     <div class="px-3" [ngStyle]="{'margin-top': i === 0 ? '25px' : 'unset'}"  *ngFor="let navItem of sideNavItems; let i = index;">
       <div [routerLink]="navItem.path" (click)="currentNavItem = navItem" [class.active]="navItem.key == currentNavItem?.key"   class="item  d-flex align-items-center px-3 pe-5 py-2 mt-3">
         <span class="material-icons-outlined">{{navItem.icon}}</span>
-        <span class="ms-2">{{navItem.label}}</span>
+        <span class="ms-2">{{navItem.label | translate}}</span>
       </div>
 
     </div>
   </div>
   <div class="main">
-    <router-outlet></router-outlet>
+    <div class="toolbar d-flex align-items-center justify-content-end px-3">
+      <div class="search-input-wrapper d-flex align-items-center p-2 me-3 w-25">
+        <span matPrefix class="material-icons-outlined">
+          search
+        </span>
+         <input class="search-input ps-2 w-100" [formControl]="searchControl" type="text" placeholder="{{'SEARCH_PLACEHOLDER' | translate}}">
+      </div>
+      <span class="material-icons-outlined clickable notification-icon mx-1">
+        notifications
+        </span>
+        <img class="user-avatar clickable mx-3" src="../assets/users_images/calvin_candie.png">
+    </div>
+    <div class="page">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
+
+
 
 

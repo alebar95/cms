@@ -9,8 +9,9 @@
       "creation_date": "1667652265159",
       "author": {
         "id": 1,
-        "name": "Alessandro",
-        "surname": "Barruffo"
+        "name": "Calvin",
+        "surname": "Candie",
+        "image": "./assets/users_images/calvin_candie.png"
       }
     },
     {
@@ -18,11 +19,11 @@
       "content": "Riccosfonda (TO)  Continuano a far discutere le dichiarazioni di Flavio Briatore sui poveri. Dopo aver affermato che sono i ricchi a investire e che “i poveri non creano posti di lavoro”, l’imprenditore piemontese ha rincarato la dose: 'La povertà può essere contagiosa. Uno straccione può trasmetterla a un milionario, i ricchi vanno protetti e tutelati.'Briatore ha citato una teoria riferitagli dal suo amico Alberto Zangrillo, secondo cui la povertà ha molte analogie col COVID-19. Anche in questo caso ci può essere uno spillover da una specie inferiore a una superiore. Per il COVID si ipotizza un passaggio dal pipistrello all’uomo, per il POVERID un passaggio dal povero al ricco.Come per il Coronavirus, si può pensare a qualche misura che riduca il rischio di trasmissione. Briatore da buon imprenditore ha trasformato un problema in un’opportunità. Contro il contagio da COVID c’è stato il boom dei gel a base di alcol per le mani, per proteggere i ricchi che per sbaglio toccano un povero il patron del Twiga lancerà invece un gel specifico con un disinfettante in grado di uccidere fino al 99% dei germi della povertà.Il nuovo prodotto si chiamerà BillionGel e sarà confezionato da Billionaire Bears Nft, la società avente come amministratore delegato Nathan Falco, il 12enne figlio di Flavio. Un flacone da 100ml costerà 140 euro, ma sarà possibile acquistare a soli 200 euro un pacchetto che comprende una confezione di gel e una pizza Pata Negra nel nuovo locale di Briatore.",
       "author": {
         "id": 1,
-        "name": "Alessandro",
-        "surname": "Barruffo"
+        "name": "Calvin",
+        "surname": "Candie"
       },
       "category": "Customs and Society",
-      "image": "",
+      "image": "./assets/users_images/calvin_candie.png",
       "creation_date": "1667652265159",
       "id": 2
     }

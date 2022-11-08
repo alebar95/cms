@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 import { SideNavItem } from './models/sidenav-item';
 
@@ -13,21 +15,26 @@ export class AppComponent {
   sideNavItems: SideNavItem[] = [
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: "SIDENAV_ITEMS.DASHBOARD",
       path: "/dashboard",
       icon: "dashboard"
     },
     {
       key: "articles",
-      label: "Articles",
+      label: "SIDENAV_ITEMS.ARTICLES",
       path: "/articles",
       icon: "article"
     }
   ];
   currentNavItem?: SideNavItem;
   isSideNavExpanded = false;
+  searchControl = new FormControl();
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private translate: TranslateService) {
+    // lingua
+    this.translate.use('en');
+
+    // aggiornamento elemento sidenav attivo
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(
       (event: any)=> {
         this.currentNavItem = this.sideNavItems.find((navItem) => navItem.path === event.url) ?? this.currentNavItem;

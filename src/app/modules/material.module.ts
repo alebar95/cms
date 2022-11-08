@@ -1,18 +1,8 @@
-import {NgModule} from '@angular/core';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  exports: [
-  MatSidenavModule,
-  MatToolbarModule
-  ]
+  exports: [MatInputModule, MatFormFieldModule],
 })
-
 export class MaterialModule {}
-
-
-
-
-
