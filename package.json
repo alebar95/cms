@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "api": "ng-openapi-gen --input cms_api.json --output src/app/api"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "bootstrap-icons": "^1.9.1",
     "jquery": "^3.6.1",
     "material-icons": "^1.12.1",
+    "ng-openapi-gen": "^0.23.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
