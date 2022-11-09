@@ -8,23 +8,23 @@ import { SideNavItem } from './models/sidenav-item';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'cms';
   sideNavItems: SideNavItem[] = [
     {
-      key: "dashboard",
-      label: "SIDENAV_ITEMS.DASHBOARD",
-      path: "/dashboard",
-      icon: "dashboard"
+      key: 'dashboard',
+      label: 'SIDENAV_ITEMS.DASHBOARD',
+      path: '/dashboard',
+      icon: 'dashboard',
     },
     {
-      key: "articles",
-      label: "SIDENAV_ITEMS.ARTICLES",
-      path: "/articles",
-      icon: "article"
-    }
+      key: 'articles',
+      label: 'SIDENAV_ITEMS.ARTICLES',
+      path: '/articles',
+      icon: 'article',
+    },
   ];
   currentNavItem?: SideNavItem;
   isSideNavExpanded = false;
@@ -35,12 +35,12 @@ export class AppComponent {
     this.translate.use('en');
 
     // aggiornamento elemento sidenav attivo
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(
-      (event: any)=> {
-        this.currentNavItem = this.sideNavItems.find((navItem) => navItem.path === event.url) ?? this.currentNavItem;
-      }
-    )
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentNavItem =
+          this.sideNavItems.find((navItem) => navItem.path === event.url) ??
+          this.currentNavItem;
+      });
   }
-
-
 }

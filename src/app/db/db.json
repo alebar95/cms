@@ -1,6 +1,5 @@
 {
-  "articles": [
-    {
+  "articles": [{
       "id": 1,
       "title": "Lorem Ipsum",
       "content": "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -20,17 +19,18 @@
       "author": {
         "id": 1,
         "name": "Calvin",
-        "surname": "Candie"
+        "surname": "Candie",
+        "image": "./assets/users_images/calvin_candie.png"
       },
       "category": "Customs and Society",
-      "image": "./assets/users_images/calvin_candie.png",
       "creation_date": "1667652265159",
       "id": 2
     }
   ],
   "authors": {
     "id": 1,
-    "name": "Alessandro"
+    "name": "Calvin",
+    "surname": "Candie",
+    "image": "./assets/users_images/calvin_candie.png"
   }
 }
-
