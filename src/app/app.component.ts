@@ -37,7 +37,10 @@ export class AppComponent {
     // aggiornamento elemento sidenav attivo
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(
       (event: any)=> {
-        this.currentNavItem = this.sideNavItems.find((navItem) => navItem.path === event.url) ?? this.currentNavItem;
+        if (event.url === '/') this.currentNavItem = this.sideNavItems[0];
+        else {
+          this.currentNavItem = this.sideNavItems.find((navItem) => navItem.path === event.url) ?? this.currentNavItem;
+        }
       }
     )
   }
