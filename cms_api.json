@@ -22,13 +22,17 @@
           "Articles"
         ],
         "description": "get all articles",
+        "operationId": "getArticles",
         "responses": {
           "200": {
             "description": "list of articles",
             "content": {
               "application/json; charset=utf-8": {
                 "schema": {
-                  "$ref": "#/components/schemas/Article"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
                 },
                 "examples": {}
               }

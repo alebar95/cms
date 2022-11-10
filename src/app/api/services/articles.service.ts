@@ -23,24 +23,24 @@ export class ArticlesService extends BaseService {
   }
 
   /**
-   * Path part for operation articlesGet
+   * Path part for operation getArticles
    */
-  static readonly ArticlesGetPath = '/articles';
+  static readonly GetArticlesPath = '/articles';
 
   /**
    * get all articles
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `articlesGet()` instead.
+   * To access only the response body, use `getArticles()` instead.
    *
    * This method doesn't expect any request body.
    */
-  articlesGet$Response(params?: {
+  getArticles$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Article>> {
+): Observable<StrictHttpResponse<Array<Article>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ArticlesService.ArticlesGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, ArticlesService.GetArticlesPath, 'get');
     if (params) {
     }
 
@@ -51,7 +51,7 @@ export class ArticlesService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Article>;
+        return r as StrictHttpResponse<Array<Article>>;
       })
     );
   }
@@ -60,17 +60,17 @@ export class ArticlesService extends BaseService {
    * get all articles
    *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `articlesGet$Response()` instead.
+   * To access the full response (for headers, for example), `getArticles$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  articlesGet(params?: {
+  getArticles(params?: {
     context?: HttpContext
   }
-): Observable<Article> {
+): Observable<Array<Article>> {
 
-    return this.articlesGet$Response(params).pipe(
-      map((r: StrictHttpResponse<Article>) => r.body as Article)
+    return this.getArticles$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Article>>) => r.body as Array<Article>)
     );
   }
 

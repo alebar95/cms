@@ -3,5 +3,13 @@
     "DASHBOARD": "Dashboard",
     "ARTICLES": "Articles"
   },
-  "SEARCH_PLACEHOLDER": "Search"
+  "SEARCH_PLACEHOLDER": "Search",
+  "ADD": "Add",
+  "ID": "ID",
+  "TITLE": "Title",
+  "AUTHOR": "Author",
+  "CREATION_DATE": "Creation date",
+  "CATEGORY": "Category",
+  "EDIT": "Edit",
+  "DELETE": "Delete"
 }
