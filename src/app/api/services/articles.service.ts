@@ -36,12 +36,22 @@ export class ArticlesService extends BaseService {
    * This method doesn't expect any request body.
    */
   getArticles$Response(params?: {
+    '_page'?: number;
+    '_limit'?: number;
+    'q'?: string;
+    '_sort'?: string;
+    '_order'?: string;
     context?: HttpContext
   }
 ): Observable<StrictHttpResponse<Array<Article>>> {
 
     const rb = new RequestBuilder(this.rootUrl, ArticlesService.GetArticlesPath, 'get');
     if (params) {
+      rb.query('_page', params['_page'], {"style":"form","explode":true});
+      rb.query('_limit', params['_limit'], {"style":"form","explode":true});
+      rb.query('q', params['q'], {"style":"form","explode":true});
+      rb.query('_sort', params['_sort'], {"style":"form","explode":true});
+      rb.query('_order', params['_order'], {"style":"form","explode":true});
     }
 
     return this.http.request(rb.build({
@@ -65,6 +75,11 @@ export class ArticlesService extends BaseService {
    * This method doesn't expect any request body.
    */
   getArticles(params?: {
+    '_page'?: number;
+    '_limit'?: number;
+    'q'?: string;
+    '_sort'?: string;
+    '_order'?: string;
     context?: HttpContext
   }
 ): Observable<Array<Article>> {

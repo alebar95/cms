@@ -3,6 +3,12 @@
     "DASHBOARD": "Dashboard",
     "ARTICLES": "Articles"
   },
+  "PAGINATOR": {
+    "OF": "of",
+    "ITEMS_PER_PAGE": "Items per page",
+    "NEXT_PAGE": "Next page",
+    "PREVIOUS_PAGE": "Previuos page"
+  },
   "SEARCH_PLACEHOLDER": "Search",
   "ADD": "Add",
   "ID": "ID",
@@ -11,5 +17,6 @@
   "CREATION_DATE": "Creation date",
   "CATEGORY": "Category",
   "EDIT": "Edit",
-  "DELETE": "Delete"
+  "DELETE": "Delete",
+  "NO_DATA": "No data"
 }

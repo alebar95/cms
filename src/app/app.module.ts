@@ -2,7 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ArticleComponent } from './pages/articles/article/article.component';
 import { NewArticleComponent } from './pages/articles/new-article/new-article.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PaginatorIntlService } from './services/paginator-intl.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,7 +42,17 @@ export function createTranslateLoader(http: HttpClient) {
       deps: [HttpClient]
   }}),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useFactory: (translate: TranslateService) => {
+        const service = new PaginatorIntlService();
+        service.injectTranslateService(translate);
+        return service;
+      },
+      deps: [TranslateService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
