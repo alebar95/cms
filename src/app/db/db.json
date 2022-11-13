@@ -8,7 +8,7 @@
         "name": "Breaking News"
       },
       "image": "",
-      "creation_date": "1667652265159",
+      "creation_date": 1667652265159,
       "author": {
         "id": 1,
         "name": "Calvin",
@@ -29,7 +29,7 @@
         "id": 1,
         "name": "Customs and Society"
       },
-      "creation_date": "1667652265159",
+      "creation_date": 1668338243363,
       "id": 2
     }
   ],

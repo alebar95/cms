@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { map, Subscription } from 'rxjs';
 import { Article } from 'src/app/api/models';
 import { ArticlesService } from 'src/app/api/services';
@@ -10,7 +11,8 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
 })
-export class ArticlesComponent implements OnInit, OnDestroy {
+export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
+
   displayedColumns: string[] = [
     'id',
     'title',
@@ -25,12 +27,23 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   articlesPageSize = 5;
   searchSubscription?: Subscription;
   searchTerm = '';
+  @ViewChild(MatSort) sort?: MatSort;
+
   constructor(
     private articlesService: ArticlesService,
     private searchService: SearchService
   ) {}
+
+  ngAfterViewInit(): void {
+    if (this.sort) {
+      this.sort.sortChange.subscribe((sortInfo: Sort) => {
+        this.getArticles(this.searchTerm,sortInfo.active, sortInfo.direction);
+      })
+    }
+  }
+
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.searchSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -40,12 +53,22 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     this.getArticles();
   }
 
-  getArticles(searchTerm?: string) {
+  getArticles(searchTerm?: string, sort?: string, order?: string ) {
+    /*---sort di default per data di creazione dalla più recente *---*/
+    if (!sort ) {
+      sort = 'creation_date';
+    }
+    if (!order) {
+      order='desc';
+    }
+     /*----------------------*/
     this.articlesService
       .getArticles$Response({
         _page: this.articlesCurrentPage,
         _limit: this.articlesPageSize,
-        q: searchTerm
+        q: searchTerm,
+        _sort: sort,
+        _order: order
       })
       .pipe(
         map((res) => {
