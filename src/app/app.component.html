@@ -19,6 +19,9 @@
           search
         </span>
          <input class="search-input ps-2 w-100" [formControl]="searchControl" type="text" placeholder="{{'SEARCH_PLACEHOLDER' | translate}}">
+         <span matSuffix class="material-icons-outlined clickable" *ngIf="searchControl.value" (click)="searchControl.reset()">
+          close
+        </span>
       </div>
       <span class="material-icons-outlined clickable notification-icon mx-1">
         notifications

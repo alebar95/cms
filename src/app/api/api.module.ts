@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { ArticlesService } from './services/articles.service';
+import { CategoriesService } from './services/categories.service';
+import { UsersService } from './services/users.service';
 
 /**
  * Module that provides all services and configuration.
@@ -15,6 +17,8 @@ import { ArticlesService } from './services/articles.service';
   declarations: [],
   providers: [
     ArticlesService,
+    CategoriesService,
+    UsersService,
     ApiConfiguration
   ],
 })

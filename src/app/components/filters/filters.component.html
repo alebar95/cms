@@ -1,0 +1,56 @@
+<div class="d-flex px-3 py-2 align-items-center flex-wrap">
+  <div class="d-flex align-items-center pb-2">
+    <span class="pe-2 fw-bold">{{'FILTERS' | translate}}</span>
+    <span class="material-icons-outlined pe-3">
+      tune
+      </span>
+  </div>
+
+  <ng-container *ngIf="filterList && filterList.length">
+    <div
+      *ngFor="let filter of filterList; let i = index"
+      [class.pe-2]="i != filterList.length - 1"
+    >
+      <mat-form-field appearance="fill">
+        <mat-label>{{ filter.name | translate }}</mat-label>
+        <!--filtri di tipo select-->
+        <mat-select
+          *ngIf="filter.type === 'select' && filter.control"
+          [formControl]="filter.control"
+          multiple
+          (closed)="onSelectionClosed(filter)"
+        >
+          <mat-select-trigger>
+            {{filter.control.value?.[0] || ''}}
+            <span
+              *ngIf="(filter.control.value?.length || 0) > 1"
+              class="additional-selection"
+            >
+              (+{{ (filter.control.value?.length || 0) - 1 }}
+              {{ filter.control.value?.length === 2 ? "other" : "others" }})
+            </span>
+          </mat-select-trigger>
+          <mat-option
+            *ngFor="let option of filter.options"
+            [value]="option.name"
+            >{{ option.name }}</mat-option
+          >
+        </mat-select>
+        <!--filtri di tipo date picker-->
+        <mat-date-range-input
+          [rangePicker]="picker"
+          *ngIf="filter.type === 'date_picker' && filter.controlsGroup"
+        >
+          <input matStartDate [formControl]="getControl(filter.controlsGroup.controls[0])" placeholder="{{ 'START_DATE' | translate }}" />
+          <input matEndDate [formControl]="getControl(filter.controlsGroup.controls[1])" placeholder="{{ 'END_DATE' | translate }}" />
+        </mat-date-range-input>
+        <!--<mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
+        <mat-datepicker-toggle *ngIf="filter.type === 'date_picker'"  matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker (closed)="onSelectionClosed(filter)"></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div class="ps-2 pb-3" *ngIf="activeFilters.length">
+      <a class="reset-btn" (click)="reset()">{{ "RESET" | translate }}</a>
+    </div>
+  </ng-container>
+</div>

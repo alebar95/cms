@@ -9,12 +9,12 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Article } from '../models/article';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ArticlesService extends BaseService {
+export class CategoriesService extends BaseService {
   constructor(
     config: ApiConfiguration,
     http: HttpClient
@@ -23,45 +23,35 @@ export class ArticlesService extends BaseService {
   }
 
   /**
-   * Path part for operation getArticles
+   * Path part for operation getCategories
    */
-  static readonly GetArticlesPath = '/articles';
+  static readonly GetCategoriesPath = '/categories';
 
   /**
-   * get all articles
+   * get all categories
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `getArticles()` instead.
+   * To access only the response body, use `getCategories()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getArticles$Response(params?: {
+  getCategories$Response(params?: {
     '_page'?: number;
     '_limit'?: number;
     'q'?: string;
     '_sort'?: string;
     '_order'?: string;
-    'category.name'?: Array<string>;
-    'author.name'?: Array<string>;
-    creation_date_lte?: number;
-    creation_date_gte?: number;
-    creation_date_ne?: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Array<Article>>> {
+): Observable<StrictHttpResponse<Array<Category>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ArticlesService.GetArticlesPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, CategoriesService.GetCategoriesPath, 'get');
     if (params) {
       rb.query('_page', params['_page'], {"style":"form","explode":true});
       rb.query('_limit', params['_limit'], {"style":"form","explode":true});
       rb.query('q', params['q'], {"style":"form","explode":true});
       rb.query('_sort', params['_sort'], {"style":"form","explode":true});
       rb.query('_order', params['_order'], {"style":"form","explode":true});
-      rb.query('category.name', params['category.name'], {"style":"form","explode":true});
-      rb.query('author.name', params['author.name'], {"style":"form","explode":true});
-      rb.query('creation_date_lte', params.creation_date_lte, {"style":"form","explode":true});
-      rb.query('creation_date_gte', params.creation_date_gte, {"style":"form","explode":true});
-      rb.query('creation_date_ne', params.creation_date_ne, {"style":"form","explode":true});
     }
 
     return this.http.request(rb.build({
@@ -71,36 +61,31 @@ export class ArticlesService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Article>>;
+        return r as StrictHttpResponse<Array<Category>>;
       })
     );
   }
 
   /**
-   * get all articles
+   * get all categories
    *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `getArticles$Response()` instead.
+   * To access the full response (for headers, for example), `getCategories$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getArticles(params?: {
+  getCategories(params?: {
     '_page'?: number;
     '_limit'?: number;
     'q'?: string;
     '_sort'?: string;
     '_order'?: string;
-    'category.name'?: Array<string>;
-    'author.name'?: Array<string>;
-    creation_date_lte?: number;
-    creation_date_gte?: number;
-    creation_date_ne?: number;
     context?: HttpContext
   }
-): Observable<Array<Article>> {
+): Observable<Array<Category>> {
 
-    return this.getArticles$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Article>>) => r.body as Array<Article>)
+    return this.getCategories$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Category>>) => r.body as Array<Category>)
     );
   }
 

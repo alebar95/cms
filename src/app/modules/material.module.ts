@@ -5,6 +5,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+
+
+
 
 @NgModule({
   exports: [
@@ -14,6 +20,9 @@ import { MatSortModule } from '@angular/material/sort';
     MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
 })
 export class MaterialModule {}

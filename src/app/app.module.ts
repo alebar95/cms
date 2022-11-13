@@ -14,6 +14,7 @@ import { NewArticleComponent } from './pages/articles/new-article/new-article.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './services/paginator-intl.service';
+import { FiltersComponent } from './components/filters/filters.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,7 +26,8 @@ export function createTranslateLoader(http: HttpClient) {
     ArticlesComponent,
     DashboardComponent,
     ArticleComponent,
-    NewArticleComponent
+    NewArticleComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

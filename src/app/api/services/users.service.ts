@@ -9,12 +9,12 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Article } from '../models/article';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ArticlesService extends BaseService {
+export class UsersService extends BaseService {
   constructor(
     config: ApiConfiguration,
     http: HttpClient
@@ -23,45 +23,35 @@ export class ArticlesService extends BaseService {
   }
 
   /**
-   * Path part for operation getArticles
+   * Path part for operation getUsers
    */
-  static readonly GetArticlesPath = '/articles';
+  static readonly GetUsersPath = '/users';
 
   /**
-   * get all articles
+   * get all users
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `getArticles()` instead.
+   * To access only the response body, use `getUsers()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getArticles$Response(params?: {
+  getUsers$Response(params?: {
     '_page'?: number;
     '_limit'?: number;
     'q'?: string;
     '_sort'?: string;
     '_order'?: string;
-    'category.name'?: Array<string>;
-    'author.name'?: Array<string>;
-    creation_date_lte?: number;
-    creation_date_gte?: number;
-    creation_date_ne?: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Array<Article>>> {
+): Observable<StrictHttpResponse<Array<User>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, ArticlesService.GetArticlesPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, UsersService.GetUsersPath, 'get');
     if (params) {
       rb.query('_page', params['_page'], {"style":"form","explode":true});
       rb.query('_limit', params['_limit'], {"style":"form","explode":true});
       rb.query('q', params['q'], {"style":"form","explode":true});
       rb.query('_sort', params['_sort'], {"style":"form","explode":true});
       rb.query('_order', params['_order'], {"style":"form","explode":true});
-      rb.query('category.name', params['category.name'], {"style":"form","explode":true});
-      rb.query('author.name', params['author.name'], {"style":"form","explode":true});
-      rb.query('creation_date_lte', params.creation_date_lte, {"style":"form","explode":true});
-      rb.query('creation_date_gte', params.creation_date_gte, {"style":"form","explode":true});
-      rb.query('creation_date_ne', params.creation_date_ne, {"style":"form","explode":true});
     }
 
     return this.http.request(rb.build({
@@ -71,36 +61,31 @@ export class ArticlesService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Article>>;
+        return r as StrictHttpResponse<Array<User>>;
       })
     );
   }
 
   /**
-   * get all articles
+   * get all users
    *
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `getArticles$Response()` instead.
+   * To access the full response (for headers, for example), `getUsers$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  getArticles(params?: {
+  getUsers(params?: {
     '_page'?: number;
     '_limit'?: number;
     'q'?: string;
     '_sort'?: string;
     '_order'?: string;
-    'category.name'?: Array<string>;
-    'author.name'?: Array<string>;
-    creation_date_lte?: number;
-    creation_date_gte?: number;
-    creation_date_ne?: number;
     context?: HttpContext
   }
-): Observable<Array<Article>> {
+): Observable<Array<User>> {
 
-    return this.getArticles$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Article>>) => r.body as Array<Article>)
+    return this.getUsers$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<User>>) => r.body as Array<User>)
     );
   }
 

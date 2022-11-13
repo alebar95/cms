@@ -12,7 +12,10 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <table mat-table matSort [dataSource]="articles" class="mat-elevation-z8 w-100">
+      <app-filters [filterList]="articleFiltersList" (filterChanged)="getArticles()"></app-filters>
+    </div>
+    <div class="col-12">
+      <table mat-table matSort [dataSource]="articles" class="mat-elevation-z8 w-100" (matSortChange)="getArticles()" matSortActive="creation_date" matSortDirection="desc" matSortDisableClear>
         <!-- id -->
         <ng-container matColumnDef="id" >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "ID" | translate }}</th>
@@ -28,7 +31,7 @@
         <!-- categoria -->
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef>
-            {{ "CATEGORY" | translate }}
+            {{ "category" | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
             {{ element.category.name }}
@@ -37,7 +40,7 @@
 
         <!-- autore -->
         <ng-container matColumnDef="author">
-          <th mat-header-cell *matHeaderCellDef>{{ "AUTHOR" | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ "author" | translate }}</th>
           <td mat-cell *matCellDef="let element">
             {{ element.author.name }} {{ element.author.surname }}
           </td>
@@ -46,7 +49,7 @@
         <!-- data creazione -->
         <ng-container matColumnDef="creation_date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ "CREATION_DATE" | translate }}
+            {{ "creation_date" | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
             {{ element.creation_date | date }}

@@ -13,10 +13,14 @@
   "ADD": "Add",
   "ID": "ID",
   "TITLE": "Title",
-  "AUTHOR": "Author",
-  "CREATION_DATE": "Creation date",
-  "CATEGORY": "Category",
+  "author": "Author",
+  "creation_date": "Creation date",
+  "category": "Category",
   "EDIT": "Edit",
   "DELETE": "Delete",
-  "NO_DATA": "No data"
+  "NO_DATA": "No data",
+  "RESET": "Reset",
+  "START_DATE": "Start date",
+  "END_DATE": "End date",
+  "FILTERS": "Filters"
 }
