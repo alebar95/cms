@@ -15,6 +15,7 @@ import {
   CategoriesService,
   UsersService,
 } from 'src/app/api/services';
+import { AUTHOR, CATEGORY, CREATION_DATE, DATE_PICKER, ID, SELECT, TITLE } from 'src/app/constants';
 import { FilterItem } from 'src/app/models/filter-item';
 import { SearchService } from 'src/app/services/search.service';
 
@@ -25,11 +26,11 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = [
-    'id',
-    'title',
-    'category',
-    'author',
-    'creation_date',
+    ID,
+    TITLE,
+    CATEGORY,
+    AUTHOR,
+    CREATION_DATE,
     'more',
   ];
   articles: Article[] = [];
@@ -40,22 +41,22 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
   searchTerm = '';
   articleFiltersList: FilterItem[] = [
     {
-      name: 'category',
-      type: 'select',
+      name: CATEGORY,
+      type: SELECT,
       options: [],
       control: new FormControl(),
       active: false,
     },
     {
-      name: 'author',
-      type: 'select',
+      name: AUTHOR,
+      type: SELECT,
       options: [],
       control: new FormControl(),
       active: false,
     },
     {
-      name: 'creation_date',
-      type: 'date_picker',
+      name: CREATION_DATE,
+      type: DATE_PICKER,
       controlsGroup: new FormGroup([new FormControl(), new FormControl()]),
       active: false,
     },
@@ -76,21 +77,21 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
       _page: this.articlesCurrentPage,
       _limit: this.articlesPageSize,
       q: this.searchTerm,
-      _sort: this.sort?.active ?? 'creation_date', // ordina di default per data creazione dalla più recente
+      _sort: this.sort?.active ?? CREATION_DATE, // ordina di default per data creazione dalla più recente
       _order: this.sort?.direction ?? 'desc',
       'category.name':
         this.articleFiltersList.find(
-          (filter) => filter.active && filter.name === 'category'
+          (filter) => filter.active && filter.name === CATEGORY
         )?.control?.value ?? [],
       'author.name':
         this.articleFiltersList.find(
-          (filter) => filter.active && filter.name === 'author'
+          (filter) => filter.active && filter.name === AUTHOR
         )?.control?.value ?? [],
       creation_date_gte: this.articleFiltersList
-        .find((filter) => filter.active && filter.name === 'creation_date')
+        .find((filter) => filter.active && filter.name === CREATION_DATE)
         ?.controlsGroup?.controls[0]?.value?.valueOf(), // valueOf prende il valore in millisecondi della data moment.js
       creation_date_lte: this.articleFiltersList
-        .find((filter) => filter.active && filter.name === 'creation_date')
+        .find((filter) => filter.active && filter.name === CREATION_DATE)
         ?.controlsGroup?.controls[1]?.value?.valueOf(),
     };
   }
@@ -154,7 +155,7 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (res) => {
         // Aggiorno opzioni filtro
         const categoryFilterItem = this.articleFiltersList.find(
-          (item) => item.name === 'category'
+          (item) => item.name === CATEGORY
         );
         if (categoryFilterItem)
           categoryFilterItem.options = res.map((cat) => {
@@ -172,7 +173,7 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (res) => {
         // Aggiorno opzioni filtro
         const authorFilterItem = this.articleFiltersList.find(
-          (item) => item.name === 'author'
+          (item) => item.name === AUTHOR
         );
         if (authorFilterItem)
           authorFilterItem.options = res.map((author) => {
