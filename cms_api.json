@@ -160,12 +160,47 @@
             "url": "http://localhost:3000"
           }
         ]
-      },
-      "servers": [
-        {
-          "url": "http://localhost:3000"
-        }
-      ]
+      }
+    },
+    "/articles/{articleId}": {
+      "delete": {
+        "tags": [
+          "Articles"
+        ],
+        "description": "delete an article by its id",
+        "operationId": "deleteArticle",
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "Numeric ID of the article to delete",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
     },
     "/categories": {
       "get": {

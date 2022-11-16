@@ -98,9 +98,76 @@ export class ArticlesService extends BaseService {
     context?: HttpContext
   }
 ): Observable<Array<Article>> {
-
     return this.getArticles$Response(params).pipe(
       map((r: StrictHttpResponse<Array<Article>>) => r.body as Array<Article>)
+    );
+  }
+
+  /**
+   * Path part for operation deleteArticle
+   */
+  static readonly DeleteArticlePath = '/articles/{articleId}';
+
+  /**
+   * delete an article by its id
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteArticle()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteArticle$Response(params: {
+
+    /**
+     * Numeric ID of the article to delete
+     */
+    articleId: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<{
+}>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ArticlesService.DeleteArticlePath, 'delete');
+    if (params) {
+      rb.path('articleId', params.articleId, {"style":"simple","explode":false});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json; charset&#x3D;utf-8',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<{
+        }>;
+      })
+    );
+  }
+
+  /**
+   * delete an article by its id
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `deleteArticle$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteArticle(params: {
+
+    /**
+     * Numeric ID of the article to delete
+     */
+    articleId: number;
+    context?: HttpContext
+  }
+): Observable<{
+}> {
+
+    return this.deleteArticle$Response(params).pipe(
+      map((r: StrictHttpResponse<{
+}>) => r.body as {
+})
     );
   }
 

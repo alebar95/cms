@@ -22,5 +22,12 @@
   "RESET": "Reset",
   "START_DATE": "Start date",
   "END_DATE": "End date",
-  "FILTERS": "Filters"
+  "FILTERS": "Filters",
+  "WARNING": "Warning ",
+  "CONFIRM_DELETE_SUBTITLE": "The following {{value}} will be deleted.",
+  "SUCCESS_DELETE_SUBTITLE": "The {{value}} has been succesfully deleted.",
+  "CONFIRM_QUESTION": "Are you sure you want to confirm?",
+  "OK": "Ok",
+  "CANCEL": "Cancel",
+  "CONFIRM": "Confirm"
 }

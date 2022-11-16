@@ -1,11 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map, Subscription } from 'rxjs';
@@ -15,7 +10,16 @@ import {
   CategoriesService,
   UsersService,
 } from 'src/app/api/services';
-import { AUTHOR, CATEGORY, CREATION_DATE, DATE_PICKER, ID, SELECT, TITLE } from 'src/app/constants';
+import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {
+  AUTHOR,
+  CATEGORY,
+  CREATION_DATE,
+  DATE_PICKER,
+  ID,
+  SELECT,
+  TITLE,
+} from 'src/app/constants';
 import { FilterItem } from 'src/app/models/filter-item';
 import { SearchService } from 'src/app/services/search.service';
 
@@ -24,7 +28,7 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
 })
-export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ArticlesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     ID,
     TITLE,
@@ -102,10 +106,9 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
     private articlesService: ArticlesService,
     private categoriesService: CategoriesService,
     private searchService: SearchService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private dialog: MatDialog
   ) {}
-
-  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     this.searchSubscription?.unsubscribe();
@@ -190,5 +193,52 @@ export class ArticlesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.articlesPageSize = pageInfo.pageSize;
     this.articlesCurrentPage = ++pageInfo.pageIndex; // le pagine dell'api partono da 1
     this.getArticles();
+  }
+
+  openDeleteArticleDialog(article: Article) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        data: { type: 'article', ...article },
+        type: 'operation_confirm',
+        title: 'WARNING',
+        subtitle: 'CONFIRM_DELETE_SUBTITLE',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((actionConfirmed) => {
+      if (actionConfirmed) {
+        this.deleteArticle(article.id!);
+      }
+    });
+  }
+
+  openDeleteSuccesDialog() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        data: {
+          type: 'article',
+        },
+        type: 'operation_done',
+        title: 'DELETE',
+        subtitle: 'SUCCESS_DELETE_SUBTITLE',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((_) => {
+      this.getArticles();
+    });
+  }
+
+  deleteArticle(articleId: number) {
+    this.articlesService.deleteArticle({ articleId }).subscribe({
+      next: (_) => {
+        this.openDeleteSuccesDialog();
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }

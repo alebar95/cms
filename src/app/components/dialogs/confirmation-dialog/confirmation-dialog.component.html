@@ -1,0 +1,43 @@
+<div class="p3" *ngIf="data">
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 mat-dialog-title>{{ data.title | translate }}</h1>
+    <span
+      class="material-icons-outlined clickable mb-auto"
+      (click)="dialogRef.close()"
+      >close</span
+    >
+  </div>
+  <div mat-dialog-content class="py-3">
+    <p>{{ data.subtitle | translate: { value: data.data.type } }}</p>
+    <ng-container
+      *ngIf="
+        data.data.type === 'article' && data.data.title && data.data.category
+      "
+    >
+      <div class="ps-3">
+        <p><span class="fw-bold">{{'TITLE' | translate}}: </span> {{ data.data.title }}</p>
+        <p><span class="fw-bold">{{'category' | translate}}: </span> {{ data.data.category.name }}</p>
+      </div>
+      <div *ngIf="data.type === 'operation_confirm'">
+        {{ "CONFIRM_QUESTION" | translate }}
+      </div>
+    </ng-container>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button
+      mat-dialog-close
+      *ngIf="data.type === 'operation_confirm'"
+      class="btn btn-outline-primary me-2"
+    >
+      {{ "CANCEL" | translate }}
+    </button>
+    <button
+      (click)="dialogRef.close(true)"
+      [class.btn-danger]="data.type === 'operation_confirm'"
+      [class.btn-outline-primary]="data.type === 'operation_done'"
+      class="btn me-2"
+    >
+      {{ confirmButtonText | translate }}
+    </button>
+  </div>
+</div>
