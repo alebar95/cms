@@ -1,5 +1,5 @@
 <div class="d-flex px-3 py-2 align-items-center flex-wrap">
-  <div class="d-flex align-items-center pb-2">
+  <div class="d-flex align-items-center">
     <span class="pe-2 fw-bold">{{'FILTERS' | translate}}</span>
     <span class="material-icons-outlined pe-3">
       tune
@@ -9,9 +9,9 @@
   <ng-container *ngIf="filterList && filterList.length">
     <div
       *ngFor="let filter of filterList; let i = index"
-      [class.pe-2]="i != filterList.length - 1"
+      [class.pe-5]="i != filterList.length - 1"
     >
-      <mat-form-field appearance="fill">
+      <mat-form-field >
         <mat-label>{{ filter.name | translate }}</mat-label>
         <!--filtri di tipo select-->
         <mat-select

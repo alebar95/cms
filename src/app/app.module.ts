@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/material.module';
 import { ArticlesComponent } from './pages/articles/articles.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ArticlePreviewComponent } from './pages/articles/article-preview/article-preview.component';
 import { ArticleComponent } from './pages/articles/article/article.component';
-import { NewArticleComponent } from './pages/articles/new-article/new-article.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PaginatorIntlService } from './services/paginator-intl.service';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -26,8 +28,8 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     ArticlesComponent,
     DashboardComponent,
+    ArticlePreviewComponent,
     ArticleComponent,
-    NewArticleComponent,
     FiltersComponent,
     ConfirmationDialogComponent
   ],
@@ -38,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AngularEditorModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {

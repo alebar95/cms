@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticleComponent } from './pages/articles/article/article.component';
+import { ArticlePreviewComponent } from './pages/articles/article-preview/article-preview.component';
 import { ArticlesComponent } from './pages/articles/articles.component';
-import { NewArticleComponent } from './pages/articles/new-article/new-article.component';
+import { ArticleComponent } from './pages/articles/article/article.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -16,12 +16,16 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: "articles/new-article",
-    component: NewArticleComponent
+    path: "articles/article/:id",
+    component: ArticleComponent
   },
   {
-    path: "articles/:id",
+    path: "articles/article",
     component: ArticleComponent
+  },
+  {
+    path: "articles/article-preview",
+    component: ArticlePreviewComponent
   },
   {
     path: "articles",

@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
 })
 export class MaterialModule {}

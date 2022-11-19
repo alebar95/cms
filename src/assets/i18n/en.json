@@ -29,5 +29,15 @@
   "CONFIRM_QUESTION": "Are you sure you want to confirm?",
   "OK": "Ok",
   "CANCEL": "Cancel",
-  "CONFIRM": "Confirm"
+  "CONFIRM": "Confirm",
+  "NEW_ARTICLE": "New Article",
+  "CONTENT": "Content",
+  "SAVE": "Save",
+  "PUBLISH": "Publish",
+  "BACK": "Back",
+  "IMAGE": "Image",
+  "UPLOAD_IMAGE": "Upload image",
+  "UPLOAD_FILE": "Upload a file",
+  "DRAG_N_DROP": "or drag and drop here",
+  "UPLOAD_FILE_ERROR": "Upload failed"
 }

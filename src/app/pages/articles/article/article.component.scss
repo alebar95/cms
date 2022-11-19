@@ -1,0 +1,21 @@
+.drop-file-zone {
+  text-align: center;
+  border: dashed 1px #979797;
+  position: relative;
+  margin: 0 auto;
+}
+input#fileDropRef {
+  display: none;
+}
+
+  .file {
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #353f4a;
+    }
+  }
+
+  .error{
+    color: red;
+  }

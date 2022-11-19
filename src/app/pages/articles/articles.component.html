@@ -2,7 +2,7 @@
   <div class="w-100 d-flex align-items-center justify-content-between mb-3">
     <h1 class="mb-2">{{ "SIDENAV_ITEMS.ARTICLES" | translate }}</h1>
     <button
-      routerLink="new-article"
+      routerLink="article"
       type="button"
       class="btn btn-outline-primary d-flex align-items-center justify-content-center mb-2"
     >
@@ -93,8 +93,8 @@
 
 <mat-menu #moreMenu="matMenu" class="moreMenu">
   <ng-template matMenuContent let-data="data">
-    <button mat-menu-item class="d-flex align-items-center justify-content-around">
-      <span class="material-icons-outlined"> edit </span>
+    <button mat-menu-item class="d-flex align-items-center justify-content-around" [routerLink]="'article/'+data.id">
+      <span class="material-icons-outlined" > edit </span>
       <span>{{ "EDIT" | translate }}</span>
     </button>
     <button mat-menu-item class="d-flex align-items-center justify-content-around" (click)="openDeleteArticleDialog(data)">

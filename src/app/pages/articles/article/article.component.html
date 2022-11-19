@@ -1,1 +1,109 @@
-<p>article works!</p>
+<div class="container-fluid">
+  <div
+    class="d-flex align-items-center clickable fw-bold mb-1"
+    (click)="goBack()"
+  >
+    <span class="material-icons-outlined me-2"> arrow_back </span>
+    <span>
+      {{ "BACK" | translate }}
+    </span>
+  </div>
+
+  <div class="w-100 d-flex align-items-center justify-content-between mb-3">
+    <h1 class="mb-2">{{ "NEW_ARTICLE" | translate }}</h1>
+    <button
+      type="button"
+      class="btn btn-outline-primary d-flex align-items-center justify-content-center mb-2"
+      (click)="onSaveArticle()"
+      [disabled]="formGroup.status !== 'VALID' || !imageBase64"
+    >
+      <span>{{ "SAVE" | translate }}</span>
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="formGroup">
+        <!-- TITOLO -->
+        <mat-form-field class="w-100">
+          <mat-label>{{ "TITLE" | translate }}</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+        <!-- EDITOR -->
+        <div class="input-group mb-3">
+          <label for="content" class="form-label"
+            >{{ "CONTENT" | translate }} *</label
+          >
+          <div class="w-100">
+            <angular-editor
+              formControlName="content"
+              [config]="editorConfig"
+            ></angular-editor>
+          </div>
+        </div>
+
+        <!-- UPLOAD IMAGE -->
+        <div class="d-flex align-items-center w-100 pb-3">
+          <label for="fileDropRef" class="form-label col-2">
+            {{ "UPLOAD_IMAGE" | translate }} *
+          </label>
+          <div
+            class="col-10 drop-file-zone p-2 d-flex align-items-center justify-content-center"
+          >
+            <ng-container *ngIf="!imageFile">
+              <span>
+                <label
+                  for="fileDropRef"
+                  class="clickable fw-bold d-flex align-items-center pb-1"
+                >
+                  <span class="material-icons-outlined pe-2"> image </span>
+                  {{ "UPLOAD_FILE" | translate }}
+                </label>
+                {{ "DRAG_N_DROP" | translate }}
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                #fileDropRef
+                id="fileDropRef"
+                (change)="fileBrowseHandler($event.target)"
+              />
+            </ng-container>
+
+            <ng-container *ngIf="imageFile">
+              <div class="d-flex align-items-center w-100">
+                <span *ngIf="!imageFileError"class="material-icons-outlined pe-2 fs-1">
+                  image
+                </span>
+                <span *ngIf="imageFileError" class="material-icons-outlined pe-2 fs-1 error">
+                  error
+                  </span>
+                <div class="d-flex flex-column w-100 pe-2">
+                    <span class="name align-self-start mb-2">
+                      {{ imageFile.name }}
+                    </span>
+                      <mat-progress-bar mode="determinate" [class.error]="imageFileError"  [value]="imageFileUploadProgress"></mat-progress-bar>
+                </div>
+                <span class="clickable material-icons-outlined" (click)="deleteImage()"> delete </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <!-- CATEGORIA -->
+        <mat-form-field class="w-100">
+          <mat-label>{{ "category" | translate }}</mat-label>
+          <mat-select formControlName="category"
+          [compareWith]="compareWithCategorySelect">
+            <mat-select-trigger>
+              {{ formGroup.controls["category"].value.name || "" }}
+            </mat-select-trigger>
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category"
+              >{{ category.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>

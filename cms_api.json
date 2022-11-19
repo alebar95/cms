@@ -21,6 +21,7 @@
         "tags": [
           "Articles"
         ],
+        "summary": "Get all articles",
         "description": "get all articles",
         "operationId": "getArticles",
         "parameters": [
@@ -160,13 +161,124 @@
             "url": "http://localhost:3000"
           }
         ]
+      },
+      "post": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Add a new article",
+        "operationId": "createArticle",
+        "requestBody": {
+          "description": "Create article",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateArticleDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
     "/articles/{articleId}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Get article",
+        "description": "get an article by its id",
+        "operationId": "getArticleById",
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "Numeric ID of the article to delete",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Edit article",
+        "description": "Edit article",
+        "operationId": "editArtcileById",
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "description": "Numeric ID of the article to edit",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Edit article",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateArticleDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Edit article response",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Articles"
         ],
+        "summary": "Delete article",
         "description": "delete an article by its id",
         "operationId": "deleteArticle",
         "parameters": [
@@ -188,7 +300,7 @@
             "content": {
               "application/json; charset=utf-8": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/Article"
                 },
                 "examples": {}
               }
@@ -200,7 +312,12 @@
             "url": "http://localhost:3000"
           }
         ]
-      }
+      },
+      "servers": [
+        {
+          "url": "http://localhost:3000"
+        }
+      ]
     },
     "/categories": {
       "get": {
@@ -397,6 +514,31 @@
             "type": "integer",
             "format": "int64"
           },
+          "title": {
+            "type": "string"
+          },
+          "creation_date": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "image": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "author": {
+            "$ref": "#/components/schemas/User"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          }
+        }
+      },
+      "CreateArticleDto": {
+        "title": "CreateArticleDto",
+        "type": "object",
+        "properties": {
           "title": {
             "type": "string"
           },
