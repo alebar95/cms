@@ -88,6 +88,21 @@ export class ArticleComponent implements OnInit {
     ],
   };
 
+  //  dati preview d apassare al componente di preview
+  get previewData(): CreateArticleDto {
+    return {
+      ...this.formGroup.value,
+      author: this.logUserService.loggedUser,
+      image: this.imageFileUploaded,
+      creation_date: this.article
+        ? this.article.creation_date
+        : moment.now().valueOf(),
+    };
+  }
+
+  // previw mode
+  previewMode = false;
+
   // edit mode
   editMode = false;
   article?: Article;
@@ -209,7 +224,7 @@ export class ArticleComponent implements OnInit {
       width: '350px',
       data: {
         data: {
-          type: this.translate.currentLang === 'en' ? 'article' : 'articolo',
+          type: this.translate.currentLang === 'en' ? 'article' : 'Articolo',
         },
         type: 'operation_done',
         title: edit ? 'EDIT_ARTICLE' : 'NEW_ARTICLE',
@@ -325,18 +340,6 @@ export class ArticleComponent implements OnInit {
   }
 
   goToPreview() {
-    // va alla pagina di preview passando i dati da mostrare
-    this.router.navigateByUrl('articles/article-preview', {
-      state: {
-        data: {
-          ...this.formGroup.value,
-          author: this.logUserService.loggedUser,
-          image: this.imageFileUploaded,
-          creation_date: this.article
-            ? this.article.creation_date
-            : moment.now().valueOf(),
-        },
-      },
-    });
+    this.previewMode = true;
   }
 }

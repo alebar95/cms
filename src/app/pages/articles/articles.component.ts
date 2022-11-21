@@ -208,7 +208,10 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '350px',
       data: {
-        data: { type: this.translate.currentLang === 'en' ? 'article' : 'articolo', ...article },
+        data: {
+          type: this.translate.currentLang === 'en' ? 'article' : 'articolo',
+          ...article,
+        },
         type: 'operation_confirm',
         title: 'WARNING',
         subtitle: 'CONFIRM_DELETE_SUBTITLE',
@@ -227,7 +230,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       width: '350px',
       data: {
         data: {
-          type: this.translate.currentLang === 'en' ? 'article' : 'articolo',
+          type: this.translate.currentLang === 'en' ? 'article' : 'Articolo',
         },
         type: 'operation_done',
         title: 'DELETE_ARTICLE',
@@ -253,7 +256,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   goToPreview(article: Article) {
     // va alla pagina di preview passando i dati da mostrare
-    this.router.navigateByUrl('articles/article-preview', {
+    this.router.navigateByUrl('articles/article-preview/' + article.id, {
       state: {
         data: article,
       },
