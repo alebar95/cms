@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import { Category } from './category';
+import { Image } from './image';
 import { User } from './user';
 export interface Article {
   author?: User;
@@ -8,6 +9,6 @@ export interface Article {
   content?: string;
   creation_date?: number;
   id?: number;
-  image?: string;
+  image?: Image;
   title?: string;
 }

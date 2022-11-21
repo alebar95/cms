@@ -3,8 +3,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { map, Subscription } from 'rxjs';
-import { Article } from 'src/app/api/models';
+import { Article, User } from 'src/app/api/models';
 import {
   ArticlesService,
   CategoriesService,
@@ -21,6 +23,7 @@ import {
   TITLE,
 } from 'src/app/constants';
 import { FilterItem } from 'src/app/models/filter-item';
+import { LogUserService } from 'src/app/services/log-user.service';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -99,6 +102,9 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         ?.controlsGroup?.controls[1]?.value?.valueOf(),
     };
   }
+  get loggedUser(): User | undefined {
+    return this.logUserService.loggedUser;
+  }
 
   @ViewChild(MatSort) sort?: MatSort;
 
@@ -107,7 +113,10 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private usersService: UsersService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private logUserService: LogUserService,
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnDestroy(): void {
@@ -199,7 +208,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '350px',
       data: {
-        data: { type: 'article', ...article },
+        data: { type: this.translate.currentLang === 'en' ? 'article' : 'articolo', ...article },
         type: 'operation_confirm',
         title: 'WARNING',
         subtitle: 'CONFIRM_DELETE_SUBTITLE',
@@ -218,10 +227,10 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       width: '350px',
       data: {
         data: {
-          type: 'article',
+          type: this.translate.currentLang === 'en' ? 'article' : 'articolo',
         },
         type: 'operation_done',
-        title: 'DELETE',
+        title: 'DELETE_ARTICLE',
         subtitle: 'SUCCESS_DELETE_SUBTITLE',
       },
     });
@@ -238,6 +247,15 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error(err);
+      },
+    });
+  }
+
+  goToPreview(article: Article) {
+    // va alla pagina di preview passando i dati da mostrare
+    this.router.navigateByUrl('articles/article-preview', {
+      state: {
+        data: article,
       },
     });
   }

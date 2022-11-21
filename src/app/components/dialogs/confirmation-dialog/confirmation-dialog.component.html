@@ -11,7 +11,7 @@
     <p>{{ data.subtitle | translate: { value: data.data.type } }}</p>
     <ng-container
       *ngIf="
-        data.data.type === 'article' && data.data.title && data.data.category
+        (data.data.type === 'article' || data.data.type === 'articolo') && data.data.title && data.data.category
       "
     >
       <div class="ps-3">

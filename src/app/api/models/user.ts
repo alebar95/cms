@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
+import { Image } from './image';
 export interface User {
   id?: number;
-  image?: string;
+  image?: Image;
   name?: string;
-  surname?: string;
 }

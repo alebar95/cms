@@ -10,15 +10,27 @@
   </div>
 
   <div class="w-100 d-flex align-items-center justify-content-between mb-3">
-    <h1 class="mb-2">{{ "NEW_ARTICLE" | translate }}</h1>
-    <button
+    <h1 *ngIf="!editMode" class="mb-2">{{ "NEW_ARTICLE" | translate }}</h1>
+    <h1 *ngIf="editMode" class="mb-2">{{ "EDIT_ARTICLE" | translate }}</h1>
+    <div class="d-flex">
+      <button
+      type="button"
+      class="btn btn-outline-secondary d-flex align-items-center justify-content-center mb-2 me-2"
+      [disabled]="formGroup.status !== 'VALID' || !imageFileUploaded"
+      (click)="goToPreview()"
+    >
+      <span>{{ "PREVIEW" | translate }}</span>
+    </button>
+      <button
       type="button"
       class="btn btn-outline-primary d-flex align-items-center justify-content-center mb-2"
       (click)="onSaveArticle()"
-      [disabled]="formGroup.status !== 'VALID' || !imageBase64"
+      [disabled]="formGroup.status !== 'VALID' || !imageFileUploaded"
     >
       <span>{{ "SAVE" | translate }}</span>
     </button>
+    </div>
+
   </div>
   <div class="row">
     <div class="col-12">
@@ -58,7 +70,7 @@
                   <span class="material-icons-outlined pe-2"> image </span>
                   {{ "UPLOAD_FILE" | translate }}
                 </label>
-                {{ "DRAG_N_DROP" | translate }}
+                <!--{{ "DRAG_N_DROP" | translate }}-->
               </span>
               <input
                 type="file"

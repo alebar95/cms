@@ -89,4 +89,71 @@ export class UsersService extends BaseService {
     );
   }
 
+  /**
+   * Path part for operation getUserById
+   */
+  static readonly GetUserByIdPath = '/users/{userId}';
+
+  /**
+   * Get user.
+   *
+   * get a user by its id
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getUserById()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserById$Response(params: {
+
+    /**
+     * Numeric ID of the user to get
+     */
+    userId: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<User>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UsersService.GetUserByIdPath, 'get');
+    if (params) {
+      rb.path('userId', params.userId, {"style":"simple","explode":false});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json; charset&#x3D;utf-8',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<User>;
+      })
+    );
+  }
+
+  /**
+   * Get user.
+   *
+   * get a user by its id
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `getUserById$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserById(params: {
+
+    /**
+     * Numeric ID of the user to get
+     */
+    userId: number;
+    context?: HttpContext
+  }
+): Observable<User> {
+
+    return this.getUserById$Response(params).pipe(
+      map((r: StrictHttpResponse<User>) => r.body as User)
+    );
+  }
+
 }

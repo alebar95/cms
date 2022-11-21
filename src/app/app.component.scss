@@ -11,6 +11,7 @@
 }
 
 .sidenav {
+  position: relative;
   background-color: #041c59;
   float: left;
   color: #4e6999;
@@ -47,13 +48,6 @@
   overflow: auto;
 }
 
-.user-avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    border: solid 1px #868b93;
-}
-
 .notification-icon {
   color: #868b93;
 }
@@ -68,6 +62,17 @@
     outline: none;
     text-overflow: ellipsis;
   }
+}
+
+.lang {
+  height: 24px;
+  width: 34px;
+  border-radius: 2px;
+}
+
+.lang-container {
+  position: absolute;
+  bottom: 20px;
 }
 
 

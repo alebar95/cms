@@ -132,7 +132,7 @@ export class ArticlesService extends BaseService {
      */
     body: CreateArticleDto
   }
-): Observable<StrictHttpResponse<void>> {
+): Observable<StrictHttpResponse<Article>> {
 
     const rb = new RequestBuilder(this.rootUrl, ArticlesService.CreateArticlePath, 'post');
     if (params) {
@@ -140,13 +140,13 @@ export class ArticlesService extends BaseService {
     }
 
     return this.http.request(rb.build({
-      responseType: 'text',
-      accept: '*/*',
+      responseType: 'json',
+      accept: 'application/json; charset&#x3D;utf-8',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<Article>;
       })
     );
   }
@@ -169,10 +169,10 @@ export class ArticlesService extends BaseService {
      */
     body: CreateArticleDto
   }
-): Observable<void> {
+): Observable<Article> {
 
     return this.createArticle$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+      map((r: StrictHttpResponse<Article>) => r.body as Article)
     );
   }
 
@@ -194,7 +194,7 @@ export class ArticlesService extends BaseService {
   getArticleById$Response(params: {
 
     /**
-     * Numeric ID of the article to delete
+     * Numeric ID of the article to get
      */
     articleId: number;
     context?: HttpContext
@@ -231,7 +231,7 @@ export class ArticlesService extends BaseService {
   getArticleById(params: {
 
     /**
-     * Numeric ID of the article to delete
+     * Numeric ID of the article to get
      */
     articleId: number;
     context?: HttpContext

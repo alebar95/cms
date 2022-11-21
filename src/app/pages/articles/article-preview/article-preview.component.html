@@ -1,1 +1,51 @@
-<p>article works!</p>
+<div class="container-fluid">
+  <div
+    class="d-flex align-items-center clickable fw-bold mb-1"
+    (click)="goBack()"
+  >
+    <span class="material-icons-outlined me-2"> arrow_back </span>
+    <span>
+      {{ "BACK" | translate }}
+    </span>
+  </div>
+
+  <div *ngIf="data" class="row pt-3">
+    <div class="col-12">
+      <h1 class="title pb-3">{{ data.title }}</h1>
+    </div>
+    <div class="col-8">
+      <img
+        class="w-100 article-image"
+        [src]="data.image?.base64string"
+        alt="article-image"
+      />
+    </div>
+    <div class="col-4">
+      <div class="d-flex flex-column">
+        <h3 class="fw-bold">{{'author' | translate}}</h3>
+        <div class="d-flex pb-4 ps-2 align-items-center">
+          <img
+            class="user-avatar"
+            [src]="data.author?.image?.base64string ?? ''"
+            alt="author-image "
+          />
+          <span class="ps-2"> {{ data.author?.name }} </span>
+        </div>
+      </div>
+      <div class="d-flex flex-column pb-4">
+        <h3 class="fw-bold">{{'category' | translate}}</h3>
+        <p class="ps-2">{{ data.category?.name }}</p>
+      </div>
+      <div class="d-flex pb-4 align-items-center">
+        <span class="material-icons-outlined pe-2">
+          schedule
+          </span>
+          <span>{{data.creation_date | date}}</span>
+      </div>
+
+    </div>
+    <div class="col-12 pt-3">
+      {{ data.content }}
+    </div>
+  </div>
+</div>

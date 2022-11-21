@@ -18,10 +18,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
   border-radius: 5px;
 }
 
-.angular-editor   .angular-editor-wrapper   .angular-editor-textarea {
-  height: 300px !important;
-}
+
 
 .mat-progress-bar.error .mat-progress-bar-fill::after {
   background-color: red !important;
+}
+
+.user-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: solid 1px #868b93;
+}
+
+
+.angular-editor-toolbar .select-font {
+  width: 130px !important;
 }

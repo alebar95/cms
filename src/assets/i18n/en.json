@@ -26,11 +26,14 @@
   "WARNING": "Warning ",
   "CONFIRM_DELETE_SUBTITLE": "The following {{value}} will be deleted.",
   "SUCCESS_DELETE_SUBTITLE": "The {{value}} has been succesfully deleted.",
+  "SUCCESS_EDIT_SUBTITLE": "The {{value}} has been succesfully edited.",
+  "SUCCESS_CREATE_SUBTITLE": "The {{value}} has been succesfully created.",
   "CONFIRM_QUESTION": "Are you sure you want to confirm?",
   "OK": "Ok",
   "CANCEL": "Cancel",
   "CONFIRM": "Confirm",
   "NEW_ARTICLE": "New Article",
+  "EDIT_ARTICLE": "Edit Article",
   "CONTENT": "Content",
   "SAVE": "Save",
   "PUBLISH": "Publish",
@@ -39,5 +42,8 @@
   "UPLOAD_IMAGE": "Upload image",
   "UPLOAD_FILE": "Upload a file",
   "DRAG_N_DROP": "or drag and drop here",
-  "UPLOAD_FILE_ERROR": "Upload failed"
+  "UPLOAD_FILE_ERROR": "Upload failed",
+  "PREVIEW": "Preview",
+  "EDITOR_PLACEHOLDER": "Enter text here...",
+  "DELETE_ARTICLE": "Delete article"
 }

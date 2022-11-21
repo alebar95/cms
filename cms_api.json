@@ -13,6 +13,15 @@
   "tags": [
     {
       "name": "Articles"
+    },
+    {
+      "name": "Images"
+    },
+    {
+      "name": "Categories"
+    },
+    {
+      "name": "Users"
     }
   ],
   "paths": {
@@ -181,7 +190,14 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
           }
         }
       }
@@ -198,7 +214,7 @@
           {
             "name": "articleId",
             "in": "path",
-            "description": "Numeric ID of the article to delete",
+            "description": "Numeric ID of the article to get",
             "required": true,
             "style": "simple",
             "explode": false,
@@ -502,6 +518,209 @@
           "url": "http://localhost:3000"
         }
       ]
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user",
+        "description": "get a user by its id",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "Numeric ID of the user to get",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/images": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Get all images",
+        "description": "get all images",
+        "operationId": "getImages",
+        "parameters": [
+          {
+            "name": "_page",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            },
+            "example": 0
+          },
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            },
+            "example": 1
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "test"
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "test"
+          },
+          {
+            "name": "_order",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "asc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of images",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Image"
+                  }
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Add a new image",
+        "operationId": "createImage",
+        "requestBody": {
+          "description": "Create image",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateImageDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              }
+            }
+          }
+        }
+      },
+      "servers": [
+        {
+          "url": "http://localhost:3000"
+        }
+      ]
+    },
+    "/images/{imageId}": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Get image",
+        "description": "get an image by its id",
+        "operationId": "getImageById",
+        "parameters": [
+          {
+            "name": "imageId",
+            "in": "path",
+            "description": "Numeric ID of the image to get",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -522,7 +741,7 @@
             "format": "int64"
           },
           "image": {
-            "type": "string"
+            "$ref": "#/components/schemas/Image"
           },
           "content": {
             "type": "string"
@@ -547,7 +766,7 @@
             "format": "int64"
           },
           "image": {
-            "type": "string"
+            "$ref": "#/components/schemas/Image"
           },
           "content": {
             "type": "string"
@@ -571,11 +790,8 @@
           "name": {
             "type": "string"
           },
-          "surname": {
-            "type": "string"
-          },
           "image": {
-            "type": "string"
+            "$ref": "#/components/schemas/Image"
           }
         }
       },
@@ -588,6 +804,34 @@
             "format": "int64"
           },
           "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Image": {
+        "title": "Image",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "base64string": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateImageDto": {
+        "title": "Image",
+        "type": "object",
+        "properties": {
+          "file_name": {
+            "type": "string"
+          },
+          "base64string": {
             "type": "string"
           }
         }

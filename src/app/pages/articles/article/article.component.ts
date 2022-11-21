@@ -1,3 +1,4 @@
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,11 +6,21 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import * as moment from 'moment';
-import { Article, Category, CreateArticleDto } from 'src/app/api/models';
-import { ArticlesService, CategoriesService } from 'src/app/api/services';
+import { Article, Category, CreateArticleDto, Image } from 'src/app/api/models';
+import {
+  ArticlesService,
+  CategoriesService,
+  ImagesService,
+} from 'src/app/api/services';
+import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ImageConverterService } from 'src/app/services/image-converter.service';
+import { LogUserService } from 'src/app/services/log-user.service';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-article',
@@ -20,23 +31,19 @@ export class ArticleComponent implements OnInit {
   formGroup: FormGroup;
   categories: Category[] = [];
   imageFile: File | null = null;
-  imageBase64: string | ArrayBuffer | null = null;
   imageFileUploadProgress = 0;
-  imageFileReader = new FileReader();
   imageFileError = false;
+  imageFileUploaded?: Image | null;
   // configurazioni WYSIWYG editor
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
+    height: '250px',
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Enter text here...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
@@ -61,32 +68,48 @@ export class ArticleComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    uploadUrl: 'v1/image',
-    //upload: (file: File) => {  },
-    uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
-    toolbarHiddenButtons: [['bold', 'italic'], ['fontSize']],
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      [
+        'fontSize',
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'link',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode',
+      ],
+    ],
   };
 
   // edit mode
   editMode = false;
-  article?: any;
+  article?: Article;
 
   constructor(
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     private articlesService: ArticlesService,
+    private imagesService: ImagesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private imageConverterService: ImageConverterService,
+    private dialog: MatDialog,
+    private logUserService: LogUserService,
+    private location: Location,
+    private translate: TranslateService
   ) {
     this.formGroup = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
     });
-    this.imageFileReader.onprogress = this.onReadingFileProgress;
-    this.imageFileReader.onload = this.onReadingFileDone;
   }
 
   ngOnInit(): void {
@@ -99,28 +122,40 @@ export class ArticleComponent implements OnInit {
       this.editMode = true;
     }
     this.getCategories();
+
+    // placeholder editor tradotto
+    this.translate.get('EDITOR_PLACEHOLDER').subscribe((label) => {
+      this.editorConfig.placeholder = label;
+    });
+    this.translate.onLangChange.subscribe((_) => {
+      this.editorConfig.placeholder =
+        this.translate.instant('EDITOR_PLACEHOLDER');
+    });
   }
 
   getArticle(id: number) {
     this.articlesService.getArticleById({ articleId: id }).subscribe({
-      next: (res: any) => {
+      next: (res: Article) => {
         this.article = res;
         this.formGroup.setValue({
           title: this.article.title,
           content: this.article.content,
           category: this.article.category,
         });
-        // TODO modificare modello db per article per image per il filename, fare post e get di image
-        const url = this.article.image.base64string;
-        if (url) {
-          this.imageBase64 = url;
-          fetch(url)
-          .then(res => res.blob())
-          .then(blob => {
-            const file = new File([blob], this.article.image.file_name)
-            this.imageFile = file;
-            this.imageFileUploadProgress = 100;
-          })
+        if (
+          this.article &&
+          this.article.image &&
+          this.article.image.base64string &&
+          this.article.image.file_name
+        ) {
+          // conversione da base64 letto da db a file
+          this.convertBase64toImageFile(
+            this.article.image.base64string,
+            this.fromBlobToFile,
+            (err) => {
+              console.error(err);
+            }
+          );
         }
       },
       error: (err) => {
@@ -130,17 +165,18 @@ export class ArticleComponent implements OnInit {
   }
 
   onSaveArticle() {
-    const article: CreateArticleDto = {
-      ...this.formGroup.value,
-      image: this.imageBase64,
-      author: {
-        id: 1,
-        name: 'Calvin Candie',
-        image: './assets/users_images/calvin_candie.png',
-      },
-      creation_date: moment().valueOf(),
-    };
-    this.saveArticle(article);
+    if (this.logUserService.loggedUser) {
+      const article: CreateArticleDto = {
+        ...this.formGroup.value,
+        image: this.imageFileUploaded,
+        author: this.logUserService.loggedUser,
+        creation_date:
+          this.article && this.article.creation_date
+            ? this.article.creation_date
+            : moment().valueOf(),
+      };
+      this.saveArticle(article, this.article?.id);
+    }
   }
 
   getCategories() {
@@ -154,34 +190,45 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  saveArticle(article: CreateArticleDto) {
-    this.articlesService
-      .createArticle({
-        body: article,
-      })
-      .subscribe({
-        next: (res) => {
-          console.log('creato');
+  saveArticle(article: CreateArticleDto, articleId?: number) {
+    const saveObservable = articleId
+      ? this.articlesService.editArtcileById({ articleId, body: article })
+      : this.articlesService.createArticle({ body: article });
+    saveObservable.subscribe({
+      next: (res) => {
+        this.openSaveSuccesDialog(articleId ? true : false);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  openSaveSuccesDialog(edit?: boolean) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        data: {
+          type: this.translate.currentLang === 'en' ? 'article' : 'articolo',
         },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+        type: 'operation_done',
+        title: edit ? 'EDIT_ARTICLE' : 'NEW_ARTICLE',
+        subtitle: edit ? 'SUCCESS_EDIT_SUBTITLE' : 'SUCCESS_CREATE_SUBTITLE',
+      },
+    });
+    dialogRef.afterClosed().subscribe((_) => {
+      this.router.navigateByUrl('articles');
+    });
   }
 
   goBack() {
-    this.router.navigateByUrl('articles');
+    this.location.back();
   }
-
-  /* Gestione file immagine (viene salvata come base64,
-    l'ogetto imageFileReader è il file reader che legge il file
-    in input e lo trasforma in base64)
-  */
 
   deleteImage() {
     this.imageFile = null;
-    this.imageBase64 = null;
     this.imageFileError = false;
+    this.imageFileUploaded = null;
   }
 
   fileBrowseHandler(target: EventTarget | null) {
@@ -189,23 +236,107 @@ export class ArticleComponent implements OnInit {
       const input = target as HTMLInputElement;
       if (input.files && input.files.length) this.imageFile = input.files[0];
       if (this.imageFile) {
-        this.imageFileReader.readAsDataURL(this.imageFile);
+        this.convertImageToBase64(
+          this.imageFile,
+          this.uploadImage, // upload immagine se conversione in base64 va a buon fine
+          () => (this.imageFileError = true) // errore conversione
+        );
       }
     }
   }
 
-  onReadingFileProgress = (event: ProgressEvent<FileReader>) => {
-    this.imageFileUploadProgress = (event.loaded / event.total) * 100;
+  uploadImage = (base64string: string) => {
+    if (this.imageFile) {
+      // post di upload
+      this.imagesService
+        .createImage$ResponseProgressEvent({
+          body: {
+            file_name: this.imageFile.name,
+            base64string: base64string,
+          },
+        })
+        .subscribe({
+          next: (event: HttpEvent<any>) => {
+            switch (event.type) {
+              case HttpEventType.UploadProgress:
+                // upload in progress
+                if (event.total)
+                  this.imageFileUploadProgress = Math.round(
+                    (event.loaded / event.total) * 100
+                  );
+                break;
+              case HttpEventType.Response:
+                // upload completato
+                const imageParsed: Image = JSON.parse(event.body);
+                this.imageFileUploaded = imageParsed;
+                break;
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.imageFileError = true;
+          },
+        });
+    }
   };
-  onReadingFileDone = () => {
-    this.imageBase64 = this.imageFileReader.result;
-  };
-  onReadingFileError = () => {
-    this.imageFileError = true;
+
+  fromBlobToFile = (blob: Blob) => {
+    const file = new File([blob], this.article!.image!.file_name!);
+    this.imageFile = file;
+    this.imageFileUploadProgress = 100;
+    this.imageFileUploaded = this.article!.image;
   };
 
   // funzione che compara opzioni e valore isnerito per la select di category
   compareWithCategorySelect(category1: Category, category2: Category) {
     return category1.id === category2.id;
+  }
+
+  convertImageToBase64(
+    imageFile: File,
+    succesCallback: (base64string: string) => void,
+    errorCallback: () => void
+  ) {
+    this.imageConverterService.toBase64(imageFile).subscribe({
+      next: (value) => {
+        if (value) {
+          succesCallback(value as string);
+        }
+      },
+      error: (_) => {
+        errorCallback();
+      },
+    });
+  }
+
+  convertBase64toImageFile(
+    base64string: string,
+    succesCallback: (blob: Blob) => void,
+    errorCallback: (error: any) => void
+  ) {
+    this.imageConverterService.toBlob(base64string).subscribe({
+      next: (blob) => {
+        succesCallback(blob);
+      },
+      error: (err) => {
+        errorCallback(err);
+      },
+    });
+  }
+
+  goToPreview() {
+    // va alla pagina di preview passando i dati da mostrare
+    this.router.navigateByUrl('articles/article-preview', {
+      state: {
+        data: {
+          ...this.formGroup.value,
+          author: this.logUserService.loggedUser,
+          image: this.imageFileUploaded,
+          creation_date: this.article
+            ? this.article.creation_date
+            : moment.now().valueOf(),
+        },
+      },
+    });
   }
 }

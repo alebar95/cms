@@ -7,6 +7,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 import { ArticlesService } from './services/articles.service';
 import { CategoriesService } from './services/categories.service';
 import { UsersService } from './services/users.service';
+import { ImagesService } from './services/images.service';
 
 /**
  * Module that provides all services and configuration.
@@ -19,6 +20,7 @@ import { UsersService } from './services/users.service';
     ArticlesService,
     CategoriesService,
     UsersService,
+    ImagesService,
     ApiConfiguration
   ],
 })

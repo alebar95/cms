@@ -24,6 +24,10 @@ const routes: Routes = [
     component: ArticleComponent
   },
   {
+    path: "articles/article-preview/:id",
+    component: ArticlePreviewComponent
+  },
+  {
     path: "articles/article-preview",
     component: ArticlePreviewComponent
   },
