@@ -18,6 +18,10 @@ Per generare il codice basta eseguire lo script `api` indicato nel file `package
 
 Eseguire `npm install` per installare le dipendenze ed `ng serve` per servire l'applicazione in locale. Aprire il browser all'indirizzo `http://localhost:4200/`.
 
+## Internazionalizzaione
+
+L'internazionalizzaione delle label è gestita attraverso il pacchetto `https://github.com/ngx-translate/core`.
+
 
 
 

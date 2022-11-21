@@ -260,6 +260,7 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  // le immagini sono salvate nel db.json in base64
   uploadImage = (base64string: string) => {
     if (this.imageFile) {
       // post di upload
